@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<!--    Вынест строки в ресы-->
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/TextResult"
+        android:textSize="80sp"
+        android:gravity="end"
+        android:ellipsize="start"
+        android:singleLine="true"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ConditionText"
+        android:textSize="80sp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:singleLine="true"
+        >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:id="@+id/reset"
+                    style="@style/Button"
+                    android:text="@string/ResetText"
+                    />
+
+                <TextView
+                    android:id="@+id/clear"
+                    style="@style/Button"
+                    android:text="@string/ClearText"
+                    />
+
+                <TextView
+                    android:id="@+id/percent"
+                    style="@style/Button"
+                    android:text="@string/PercentText"
+                    />
+
+                <TextView
+                    android:id="@+id/divide"
+                    style="@style/Button"
+                    android:text="@string/DivideText"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:id="@+id/seven"
+                    style="@style/Button"
+                    android:text="@string/SevenText"
+                    />
+
+                <TextView
+                    android:id="@+id/eight"
+                    style="@style/Button"
+                    android:text="@string/EightText"
+                    />
+
+                <TextView
+                    android:id="@+id/nine"
+                    style="@style/Button"
+                    android:text="@string/NineText"
+                    />
+
+                <TextView
+                    android:id="@+id/multiply"
+                    style="@style/Button"
+                    android:text="@string/MultipleText"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/four"
+                    style="@style/Button"
+                    android:text="@string/FourText"
+                    />
+
+                <TextView
+                    android:id="@+id/five"
+                    style="@style/Button"
+                    android:text="@string/FiveText"
+                    />
+
+                <TextView
+                    android:id="@+id/six"
+                    style="@style/Button"
+                    android:text="@string/SixText"
+                    />
+
+                <TextView
+                    android:id="@+id/minus"
+                    style="@style/Button"
+                    android:text="@string/MinusText"
+                    />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/one"
+                style="@style/Button"
+                android:text="@string/OneText"
+                />
+
+            <TextView
+                android:id="@+id/two"
+                style="@style/Button"
+                android:text="@string/TwoText"
+                />
+
+            <TextView
+                android:id="@+id/three"
+                style="@style/Button"
+                android:text="@string/ThreeText"
+                />
+
+            <TextView
+                android:id="@+id/plus"
+                style="@style/Button"
+                android:text="@string/PlusText"
+                />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:layout_marginBottom="12dp"
+                >
+                <TextView
+                    android:id="@+id/zero"
+                    style="@style/Button"
+                    android:text="@string/ZeroText"
+                    />
+                <TextView
+                    android:id="@+id/threeZero"
+                    style="@style/Button"
+                    android:text="@string/ThreeZeroText"
+                    />
+                <TextView
+                    android:id="@+id/point"
+                    style="@style/Button"
+                    android:text="@string/PointText"
+                    />
+
+                <TextView
+                    android:id="@+id/equall"
+                    style="@style/Button"
+                    android:text="@string/EquallyText"
+                    />
+
+            </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
