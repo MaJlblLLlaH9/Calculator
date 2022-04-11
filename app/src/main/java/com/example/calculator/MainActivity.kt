@@ -10,33 +10,33 @@ class MainActivity : AppCompatActivity() {
     //   val conditionText1
 // lateinint - что это ? Какой есть другой способ инициализации
 
-    val condition = findViewById<TextView>(R.id.condition)
-    val zero = findViewById<TextView>(R.id.zero)
-    val threeZero = findViewById<TextView>(R.id.threeZero)
-    val one = findViewById<TextView>(R.id.one)
-    val two = findViewById<TextView>(R.id.two)
-    val three = findViewById<TextView>(R.id.three)
-    val four = findViewById<TextView>(R.id.four)
-    val five = findViewById<TextView>(R.id.five)
-    val six = findViewById<TextView>(R.id.six)
-    val seven = findViewById<TextView>(R.id.seven)
-    val eight = findViewById<TextView>(R.id.eight)
-    val nine = findViewById<TextView>(R.id.nine)
-    val plus = findViewById<TextView>(R.id.plus)
-    val minus = findViewById<TextView>(R.id.minus)
-    val multiply = findViewById<TextView>(R.id.multiply)
-    val divide = findViewById<TextView>(R.id.divide)
-    val clear = findViewById<TextView>(R.id.clear)
-    val reset = findViewById<TextView>(R.id.reset)
-    val percent = findViewById<TextView>(R.id.percent)
-    val equall = findViewById<TextView>(R.id.equall)
-    val conditionString = condition.text.toString()
+    lateinit var condition : TextView
+    lateinit var zero : TextView
+    lateinit var threeZero : TextView
+    lateinit var one : TextView
+    lateinit var two : TextView
+    lateinit var three : TextView
+    lateinit var four : TextView
+    lateinit var five : TextView
+    lateinit var six : TextView
+    lateinit var seven : TextView
+    lateinit var eight : TextView
+    lateinit var nine : TextView
+    lateinit var plus : TextView
+    lateinit var minus : TextView
+    lateinit var multiply : TextView
+    lateinit var divide : TextView
+    lateinit var clear : TextView
+    lateinit var reset : TextView
+    lateinit var percent : TextView
+    lateinit var equall : TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // conditionText1 = findViewById<TextView>(R.id.condition)
-
+        initialization()
         run()
 //
 //        // вынести вверх. не срать в onCreate
@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
     fun setConditionField(str: String) {
         condition.setText(condition.text.toString() + str)
     }
-
     fun zero() {
         zero.setOnClickListener {
             Toast.makeText(it.context, "0 is added", Toast.LENGTH_SHORT).show()
@@ -172,19 +171,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clear() {
-       clear.setOnClickListener{
+        clear.setOnClickListener{
+            val conditionString = condition.text.toString()
             Toast.makeText(this, "Clear1", Toast.LENGTH_LONG).show()
             if(conditionString.isNotEmpty())   {
                 condition.setText(conditionString.substring(0,conditionString.length -1))
-                }
             }
+        }
     }
     fun reset(){
-            reset.setOnClickListener{
+        reset.setOnClickListener{
             Toast.makeText(this, "Clear", Toast.LENGTH_LONG).show()
             condition.setText("")
             reset.setText("")
         }
+    }
+    fun initialization(){
+        condition = findViewById<TextView>(R.id.condition)
+        zero = findViewById<TextView>(R.id.zero)
+        threeZero = findViewById<TextView>(R.id.threeZero)
+        one = findViewById<TextView>(R.id.one)
+        two = findViewById<TextView>(R.id.two)
+        three = findViewById<TextView>(R.id.three)
+        four = findViewById<TextView>(R.id.four)
+        five = findViewById<TextView>(R.id.five)
+        six = findViewById<TextView>(R.id.six)
+        seven = findViewById<TextView>(R.id.seven)
+        eight = findViewById<TextView>(R.id.eight)
+        nine = findViewById<TextView>(R.id.nine)
+        plus = findViewById<TextView>(R.id.plus)
+        minus = findViewById<TextView>(R.id.minus)
+        multiply = findViewById<TextView>(R.id.multiply)
+        divide = findViewById<TextView>(R.id.divide)
+        clear = findViewById<TextView>(R.id.clear)
+        reset = findViewById<TextView>(R.id.reset)
+        percent = findViewById<TextView>(R.id.percent)
+        equall = findViewById<TextView>(R.id.equall)
     }
     fun run(){
         zero()
