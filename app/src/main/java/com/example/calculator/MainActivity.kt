@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var reset : TextView
     lateinit var percent : TextView
     lateinit var equall : TextView
-
+    lateinit var result : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +53,30 @@ class MainActivity : AppCompatActivity() {
 //        }
 
     }
-    fun setConditionField(str: String) {
-        condition.setText(condition.text.toString() + str)
+
+    fun isNumber(input: String): Boolean {
+        val integerChars = '0'..'9'
+        return input.all { it in integerChars}
     }
+
+    fun setResultField(str:String){
+        result.setText(str)
+    }
+    fun setConditionField(str: String) {
+        var conditionString = condition.text.toString()
+        if(isNumber(str) || isNumber(conditionString.last().toString())){
+            condition.setText(conditionString + str)
+        }
+        else if (!isNumber(str)){
+            conditionString = conditionString.dropLast(1)
+            condition.setText(conditionString + str)
+        }
+    }
+
+//    fun setResultField(str:String){
+//        result.setText(str)
+//    }
+
     fun zero() {
         zero.setOnClickListener {
             Toast.makeText(it.context, "0 is added", Toast.LENGTH_SHORT).show()
@@ -133,11 +154,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun orderOperation(){
-        val condition = findViewById<TextView>(R.id.condition)
+    fun operation(){
 
     }
-
     fun plus() {
         plus.setOnClickListener {
             setConditionField(plus.text.toString())
@@ -167,7 +186,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun equall() {
-
+        var conditionString = condition.text.toString()
+        equall.setOnClickListener{
+            setResultField(conditionString)
+        }
     }
 
     fun clear() {
@@ -175,7 +197,7 @@ class MainActivity : AppCompatActivity() {
             val conditionString = condition.text.toString()
             Toast.makeText(this, "Clear1", Toast.LENGTH_LONG).show()
             if(conditionString.isNotEmpty())   {
-                condition.setText(conditionString.substring(0,conditionString.length -1))
+                condition.setText(conditionString.dropLast(1))
             }
         }
     }
@@ -187,6 +209,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun initialization(){
+        result = findViewById<TextView>(R.id.result)
         condition = findViewById<TextView>(R.id.condition)
         zero = findViewById<TextView>(R.id.zero)
         threeZero = findViewById<TextView>(R.id.threeZero)
@@ -226,6 +249,7 @@ class MainActivity : AppCompatActivity() {
         multiply()
         divide()
         clear()
+        equall()
     }
 
 
