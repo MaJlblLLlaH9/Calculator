@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var percent : TextView
     lateinit var equall : TextView
     lateinit var result : TextView
+    lateinit var resultString : String
+    lateinit var conditionString : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +65,10 @@ class MainActivity : AppCompatActivity() {
         result.setText(str)
     }
     fun setConditionField(str: String) {
-        var conditionString = condition.text.toString()
+        conditionString = condition.text.toString()
         if(isNumber(str) || isNumber(conditionString.last().toString())){
             condition.setText(conditionString + str)
+            resultString = conditionString+str
         }
         else if (!isNumber(str)){
             conditionString = conditionString.dropLast(1)
@@ -186,9 +189,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun equall() {
-        var conditionString = condition.text.toString()
         equall.setOnClickListener{
-            setResultField(conditionString)
+            setResultField(resultString)
         }
     }
 
