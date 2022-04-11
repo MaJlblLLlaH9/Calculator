@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/ConditionText"
         android:textSize="80sp"
-        android:ellipsize="end"
+        android:ellipsize="start"
         android:gravity="end"
         android:singleLine="true"
         >
