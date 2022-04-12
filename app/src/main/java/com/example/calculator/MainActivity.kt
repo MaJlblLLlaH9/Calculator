@@ -2,9 +2,11 @@ package com.example.calculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
     //   val conditionText1
@@ -66,6 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun setConditionField(str: String) {
         conditionString = condition.text.toString()
+
         if(isNumber(str) || isNumber(conditionString.last().toString())){
             condition.setText(conditionString + str)
             resultString = conditionString+str
@@ -190,7 +193,12 @@ class MainActivity : AppCompatActivity() {
 
     fun equall() {
         equall.setOnClickListener{
+           try{ val ex = ExpressionBuilder(resultString).build()
+            resultString = ex.evaluate().toString()
             setResultField(resultString)
+           } catch(e:Exception){
+               setResultField(e.message.toString())
+           }
         }
     }
 
@@ -207,7 +215,7 @@ class MainActivity : AppCompatActivity() {
         reset.setOnClickListener{
             Toast.makeText(this, "Clear", Toast.LENGTH_LONG).show()
             condition.setText("")
-            reset.setText("")
+            result.setText("")
         }
     }
     fun initialization(){
