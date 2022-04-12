@@ -33,8 +33,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var percent : TextView
     lateinit var equall : TextView
     lateinit var result : TextView
+    lateinit var point : TextView
     lateinit var resultString : String
     lateinit var conditionString : String
+
+    var isPoint = false
+    var isPercent = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +68,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setResultField(str:String){
-        result.setText(str)
+        var string = str
+        if(str.last().toString() == "0")
+            string = str.dropLast(2)
+        result.setText(string)
     }
+
     fun setConditionField(str: String) {
         conditionString = condition.text.toString()
 
@@ -73,10 +81,11 @@ class MainActivity : AppCompatActivity() {
             condition.setText(conditionString + str)
             resultString = conditionString+str
         }
-        else if (!isNumber(str)){
+        else if (!isNumber(str)|| !isPoint || !isPercent){
             conditionString = conditionString.dropLast(1)
             condition.setText(conditionString + str)
         }
+
     }
 
 //    fun setResultField(str:String){
@@ -187,8 +196,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun point(){
+        point.setOnClickListener{
+            setConditionField(point.text.toString())
+            isPoint = true
+        }
+    }
     fun percent() {
-
+        percent.setOnClickListener{
+            setConditionField(percent.text.toString())
+            isPercent = true
+        }
     }
 
     fun equall() {
@@ -197,7 +215,8 @@ class MainActivity : AppCompatActivity() {
             resultString = ex.evaluate().toString()
             setResultField(resultString)
            } catch(e:Exception){
-               setResultField(e.message.toString())
+               setResultField("Invalid Expression")
+               Log.d("Ошибка.", "текст  ${e.message}" )
            }
         }
     }
@@ -240,6 +259,7 @@ class MainActivity : AppCompatActivity() {
         reset = findViewById<TextView>(R.id.reset)
         percent = findViewById<TextView>(R.id.percent)
         equall = findViewById<TextView>(R.id.equall)
+        point = findViewById<TextView>(R.id.point)
     }
     fun run(){
         zero()
@@ -259,6 +279,8 @@ class MainActivity : AppCompatActivity() {
         multiply()
         divide()
         clear()
+        point()
+        percent()
         equall()
     }
 
