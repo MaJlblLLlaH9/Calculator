@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var resultString : String
     lateinit var conditionString : String
 
-    var isPoint = false
-    var isPercent = false
+//    var isPoint = false
+//    var isPercent = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             condition.setText(conditionString + str)
             resultString = conditionString+str
         }
-        else if (!isNumber(str)|| !isPoint || !isPercent){
+        else if (!isNumber(str)){
             conditionString = conditionString.dropLast(1)
             condition.setText(conditionString + str)
         }
@@ -169,9 +169,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun operation(){
-
-    }
     fun plus() {
         plus.setOnClickListener {
             setConditionField(plus.text.toString())
@@ -199,13 +196,14 @@ class MainActivity : AppCompatActivity() {
     fun point(){
         point.setOnClickListener{
             setConditionField(point.text.toString())
-            isPoint = true
+          //  isPoint = true
         }
     }
+
     fun percent() {
         percent.setOnClickListener{
             setConditionField(percent.text.toString())
-            isPercent = true
+            //isPercent = true
         }
     }
 
@@ -224,7 +222,7 @@ class MainActivity : AppCompatActivity() {
     fun clear() {
         clear.setOnClickListener{
             val conditionString = condition.text.toString()
-            Toast.makeText(this, "Clear1", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Clear", Toast.LENGTH_LONG).show()
             if(conditionString.isNotEmpty())   {
                 condition.setText(conditionString.dropLast(1))
             }
@@ -232,7 +230,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun reset(){
         reset.setOnClickListener{
-            Toast.makeText(this, "Clear", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Reset", Toast.LENGTH_LONG).show()
             condition.setText("")
             result.setText("")
         }
