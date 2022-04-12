@@ -3,39 +3,36 @@ package com.example.calculator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
-    //   val conditionText1
-// lateinint - что это ? Какой есть другой способ инициализации
 
-    lateinit var condition : TextView
-    lateinit var zero : TextView
-    lateinit var threeZero : TextView
-    lateinit var one : TextView
-    lateinit var two : TextView
-    lateinit var three : TextView
-    lateinit var four : TextView
-    lateinit var five : TextView
-    lateinit var six : TextView
-    lateinit var seven : TextView
-    lateinit var eight : TextView
-    lateinit var nine : TextView
-    lateinit var plus : TextView
-    lateinit var minus : TextView
-    lateinit var multiply : TextView
-    lateinit var divide : TextView
-    lateinit var clear : TextView
-    lateinit var reset : TextView
-    lateinit var percent : TextView
-    lateinit var equall : TextView
-    lateinit var result : TextView
-    lateinit var point : TextView
-    lateinit var resultString : String
-    lateinit var conditionString : String
+    lateinit var condition: TextView
+    lateinit var zero: TextView
+    lateinit var threeZero: TextView
+    lateinit var one: TextView
+    lateinit var two: TextView
+    lateinit var three: TextView
+    lateinit var four: TextView
+    lateinit var five: TextView
+    lateinit var six: TextView
+    lateinit var seven: TextView
+    lateinit var eight: TextView
+    lateinit var nine: TextView
+    lateinit var plus: TextView
+    lateinit var minus: TextView
+    lateinit var multiply: TextView
+    lateinit var divide: TextView
+    lateinit var clear: TextView
+    lateinit var reset: TextView
+    lateinit var percent: TextView
+    lateinit var equall: TextView
+    lateinit var result: TextView
+    lateinit var point: TextView
+    lateinit var resultString: String
+    lateinit var conditionString: String
 
 //    var isPoint = false
 //    var isPercent = false
@@ -43,98 +40,83 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // conditionText1 = findViewById<TextView>(R.id.condition)
+
         initialization()
         run()
-//
-//        // вынести вверх. не срать в onCreate
-//        val conditionText = findViewById<TextView>(R.id.condition)
-//        val deleteButton = findViewById<TextView>(R.id.delete)
-//
-//
-//        deleteButton.setOnClickListener {
-//
-//            // вынести в метод. не срать в onCreate
-//            Toast.makeText(it.context, "Text", Toast.LENGTH_LONG).show()
-//            var newConditionText = conditionText.text.toString() + "0"
-//            conditionText.setText(newConditionText)
-//        }
-
     }
 
-    fun isNumber(input: String): Boolean {
+    private fun isNumber(input: String): Boolean {
         val integerChars = '0'..'9'
-        return input.all { it in integerChars}
+        return input.all { it in integerChars }
     }
 
-    fun setResultField(str:String){
+    // Str - Навроцкий был бы рад
+    private fun setResultField(str: String) {
         var string = str
-        if(str.last().toString() == "0")
+        if (str.last().toString() == "0") {
             string = str.dropLast(2)
-        result.setText(string)
+        }
+        result.text = string
     }
 
-    fun setConditionField(str: String) {
+    // Str - Навроцкий был бы рад
+    // TODO : написать javaDoc для этого метода. Что принимает и что делает
+    private fun setConditionField(str: String) {
         conditionString = condition.text.toString()
 
-        if(isNumber(str) || isNumber(conditionString.last().toString())){
-            condition.setText(conditionString + str)
-            resultString = conditionString+str
-        }
-        else if (!isNumber(str)){
+        if (isNumber(str) || isNumber(conditionString.last().toString())) {
+            condition.text = conditionString + str
+            resultString = conditionString + str
+        } else if (!isNumber(str)) {
             conditionString = conditionString.dropLast(1)
-            condition.setText(conditionString + str)
+            condition.text = conditionString + str
         }
 
     }
 
-//    fun setResultField(str:String){
-//        result.setText(str)
-//    }
-
-    fun zero() {
+    private fun zero() {
         zero.setOnClickListener {
             Toast.makeText(it.context, "0 is added", Toast.LENGTH_SHORT).show()
             setConditionField(zero.text.toString())
         }
     }
 
-    fun threeZero() {
+    private fun threeZero() {
         threeZero.setOnClickListener {
             Toast.makeText(it.context, "000 is added", Toast.LENGTH_SHORT).show()
             setConditionField(threeZero.text.toString())
         }
     }
 
-    fun one() {
+    private fun one() {
         one.setOnClickListener {
             Toast.makeText(it.context, "1 is added", Toast.LENGTH_SHORT).show()
             setConditionField(one.text.toString())
         }
     }
 
-    fun two() {
+    private fun two() {
         two.setOnClickListener {
             Toast.makeText(it.context, "2 is added", Toast.LENGTH_SHORT).show()
             setConditionField(two.text.toString())
         }
     }
 
-    fun three() {
+    private fun three() {
         three.setOnClickListener {
             Toast.makeText(it.context, "3 is added", Toast.LENGTH_SHORT).show()
             setConditionField(three.text.toString())
         }
     }
 
-    fun four() {
+    private fun four() {
         four.setOnClickListener {
             Toast.makeText(it.context, "4 is added", Toast.LENGTH_SHORT).show()
             setConditionField(four.text.toString())
         }
     }
 
-    fun five() {
+    private fun five() {
         five.setOnClickListener {
             Toast.makeText(it.context, "5 is added", Toast.LENGTH_SHORT).show()
             setConditionField(five.text.toString())
@@ -193,49 +175,52 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun point(){
-        point.setOnClickListener{
+    fun point() {
+        point.setOnClickListener {
             setConditionField(point.text.toString())
-          //  isPoint = true
+            //  isPoint = true
         }
     }
 
     fun percent() {
-        percent.setOnClickListener{
+        percent.setOnClickListener {
             setConditionField(percent.text.toString())
             //isPercent = true
         }
     }
 
     fun equall() {
-        equall.setOnClickListener{
-           try{ val ex = ExpressionBuilder(resultString).build()
-            resultString = ex.evaluate().toString()
-            setResultField(resultString)
-           } catch(e:Exception){
-               setResultField("Invalid Expression")
-               Log.d("Ошибка.", "текст  ${e.message}" )
-           }
+        equall.setOnClickListener {
+            try {
+                val ex = ExpressionBuilder(resultString).build()
+                resultString = ex.evaluate().toString()
+                setResultField(resultString)
+            } catch (e: Exception) {
+                setResultField("Invalid Expression")
+                Log.d("Ошибка.", "текст  ${e.message}")
+            }
         }
     }
 
     fun clear() {
-        clear.setOnClickListener{
+        clear.setOnClickListener {
             val conditionString = condition.text.toString()
             Toast.makeText(this, "Clear", Toast.LENGTH_LONG).show()
-            if(conditionString.isNotEmpty())   {
-                condition.setText(conditionString.dropLast(1))
+            if (conditionString.isNotEmpty()) {
+                condition.text = conditionString.dropLast(1)
             }
         }
     }
-    fun reset(){
-        reset.setOnClickListener{
+
+    fun reset() {
+        reset.setOnClickListener {
             Toast.makeText(this, "Reset", Toast.LENGTH_LONG).show()
-            condition.setText("")
-            result.setText("")
+            condition.text = ""
+            result.text = ""
         }
     }
-    fun initialization(){
+
+    fun initialization() {
         result = findViewById<TextView>(R.id.result)
         condition = findViewById<TextView>(R.id.condition)
         zero = findViewById<TextView>(R.id.zero)
@@ -259,7 +244,9 @@ class MainActivity : AppCompatActivity() {
         equall = findViewById<TextView>(R.id.equall)
         point = findViewById<TextView>(R.id.point)
     }
-    fun run(){
+
+    // Очень инетересный метод) Напиши ка к нему javaDoc с объяснением что он делает))))
+    fun run() {
         zero()
         threeZero()
         one()
