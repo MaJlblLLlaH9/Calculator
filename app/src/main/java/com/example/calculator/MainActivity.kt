@@ -1,10 +1,9 @@
 package com.example.calculator
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
@@ -34,15 +33,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var resultString: String
     lateinit var conditionString: String
 
-//    var isPoint = false
-//    var isPercent = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initialization()
-        run()
+    }
+
+    fun initConditionView() {
+        condition = findViewById(R.id.condition)
+    }
+
+    fun initResultView() {
+        result = findViewById(R.id.result)
     }
 
     private fun isNumber(input: String): Boolean {
@@ -52,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     // Str - Навроцкий был бы рад
     private fun setResultField(str: String) {
+
         var string = str
         if (str.last().toString() == "0") {
             string = str.dropLast(2)
@@ -74,200 +78,199 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun zero() {
-        zero.setOnClickListener {
-            Toast.makeText(it.context, "0 is added", Toast.LENGTH_SHORT).show()
-            setConditionField(zero.text.toString())
-        }
-    }
-
-    private fun threeZero() {
+    private fun initThreeZeroView() {
+        threeZero = findViewById(R.id.threeZero)
         threeZero.setOnClickListener {
-            Toast.makeText(it.context, "000 is added", Toast.LENGTH_SHORT).show()
             setConditionField(threeZero.text.toString())
         }
     }
 
-    private fun one() {
+    private fun initOneView() {
+        one = findViewById(R.id.one)
         one.setOnClickListener {
-            Toast.makeText(it.context, "1 is added", Toast.LENGTH_SHORT).show()
             setConditionField(one.text.toString())
         }
     }
 
-    private fun two() {
+    private fun initTwoView() {
+        two = findViewById(R.id.two)
         two.setOnClickListener {
-            Toast.makeText(it.context, "2 is added", Toast.LENGTH_SHORT).show()
             setConditionField(two.text.toString())
         }
     }
 
-    private fun three() {
+    private fun initThreeView() {
+        three = findViewById(R.id.three)
         three.setOnClickListener {
-            Toast.makeText(it.context, "3 is added", Toast.LENGTH_SHORT).show()
             setConditionField(three.text.toString())
         }
     }
 
-    private fun four() {
+    private fun initFourView() {
+        four = findViewById(R.id.four)
         four.setOnClickListener {
-            Toast.makeText(it.context, "4 is added", Toast.LENGTH_SHORT).show()
             setConditionField(four.text.toString())
         }
     }
 
-    private fun five() {
+    private fun initFiveView() {
+        five = findViewById(R.id.five)
         five.setOnClickListener {
-            Toast.makeText(it.context, "5 is added", Toast.LENGTH_SHORT).show()
             setConditionField(five.text.toString())
         }
     }
 
-    fun six() {
+    fun initSixView() {
+        six = findViewById(R.id.six)
         six.setOnClickListener {
-            Toast.makeText(it.context, "6 is added", Toast.LENGTH_SHORT).show()
             setConditionField(six.text.toString())
         }
     }
 
-    fun seven() {
+    fun initSevenView() {
+        seven = findViewById(R.id.seven)
         seven.setOnClickListener {
-            Toast.makeText(it.context, "7 is added", Toast.LENGTH_SHORT).show()
             setConditionField(seven.text.toString())
         }
     }
 
-    fun eight() {
+    fun initEightView() {
+        eight = findViewById(R.id.eight)
         eight.setOnClickListener {
-            Toast.makeText(it.context, "8 is added", Toast.LENGTH_SHORT).show()
             setConditionField(eight.text.toString())
         }
     }
 
-    fun nine() {
+    fun initNineView() {
+        nine = findViewById(R.id.nine)
         nine.setOnClickListener {
-            Toast.makeText(it.context, "9 is added", Toast.LENGTH_SHORT).show()
             setConditionField(nine.text.toString())
         }
     }
 
-    fun plus() {
+    fun initPlusView() {
+        plus = findViewById(R.id.plus)
         plus.setOnClickListener {
             setConditionField(plus.text.toString())
         }
     }
 
-    fun minus() {
+    fun initMinusView() {
+        minus = findViewById(R.id.minus)
         minus.setOnClickListener {
             setConditionField(minus.text.toString())
         }
     }
 
-    fun multiply() {
+    fun initMultiplyView() {
+        multiply = findViewById(R.id.multiply)
         multiply.setOnClickListener {
             setConditionField(multiply.text.toString())
         }
     }
 
-    fun divide() {
+    fun initDivideView() {
+        divide = findViewById(R.id.divide)
         divide.setOnClickListener {
             setConditionField(divide.text.toString())
         }
     }
 
-    fun point() {
+    fun initPointView() {
+        point = findViewById(R.id.point)
         point.setOnClickListener {
             setConditionField(point.text.toString())
             //  isPoint = true
         }
     }
 
-    fun percent() {
+    fun calculation(expression: String) {
+        val result = ExpressionBuilder(expression).build().evaluate().toString()
+        setResultField(result)
+    }
+
+    fun initPercentView() {
+        percent = findViewById(R.id.percent)
         percent.setOnClickListener {
             setConditionField(percent.text.toString())
-            //isPercent = true
-        }
-    }
 
-    fun equall() {
-        equall.setOnClickListener {
-            try {
-                val ex = ExpressionBuilder(resultString).build()
-                resultString = ex.evaluate().toString()
-                setResultField(resultString)
-            } catch (e: Exception) {
-                setResultField("Invalid Expression")
-                Log.d("Ошибка.", "текст  ${e.message}")
+            var resultStringWithPercent = ""
+            var stringBeforePercent = ""
+            var quantityOfPercent = ""
+
+            var position = resultString.length - 2
+            var conditionArray = resultString.toCharArray()
+
+            while (isNumber(conditionArray[position].toString())) {
+                position--
             }
+            stringBeforePercent = conditionString.dropLast(conditionString.length - position)
+
+            quantityOfPercent = resultString.substring(position + 1, resultString.length - 1)
+
+            var countOfPercent = ((quantityOfPercent.toDouble() / 100) * stringBeforePercent.toDouble())
+
+            resultStringWithPercent =
+                    stringBeforePercent + conditionArray[position] + countOfPercent.toString()
+            calculation(resultStringWithPercent)
         }
     }
 
-    fun clear() {
+    fun initEquallView() {
+        equall = findViewById(R.id.equall)
+        equall.setOnClickListener {
+            calculation(resultString)
+        }
+    }
+
+    fun initClearView() {
+        clear = findViewById(R.id.clear)
         clear.setOnClickListener {
             val conditionString = condition.text.toString()
-            Toast.makeText(this, "Clear", Toast.LENGTH_LONG).show()
             if (conditionString.isNotEmpty()) {
                 condition.text = conditionString.dropLast(1)
             }
         }
     }
 
-    fun reset() {
+    fun initResetView() {
+        reset = findViewById(R.id.reset)
         reset.setOnClickListener {
-            Toast.makeText(this, "Reset", Toast.LENGTH_LONG).show()
-            condition.text = ""
+            condition.text = "0"
             result.text = ""
         }
     }
 
+    fun initZeroView() {
+        zero = findViewById(R.id.zero)
+        zero.setOnClickListener {
+            setConditionField(zero.text.toString())
+        }
+    }
+
     fun initialization() {
-        result = findViewById<TextView>(R.id.result)
-        condition = findViewById<TextView>(R.id.condition)
-        zero = findViewById<TextView>(R.id.zero)
-        threeZero = findViewById<TextView>(R.id.threeZero)
-        one = findViewById<TextView>(R.id.one)
-        two = findViewById<TextView>(R.id.two)
-        three = findViewById<TextView>(R.id.three)
-        four = findViewById<TextView>(R.id.four)
-        five = findViewById<TextView>(R.id.five)
-        six = findViewById<TextView>(R.id.six)
-        seven = findViewById<TextView>(R.id.seven)
-        eight = findViewById<TextView>(R.id.eight)
-        nine = findViewById<TextView>(R.id.nine)
-        plus = findViewById<TextView>(R.id.plus)
-        minus = findViewById<TextView>(R.id.minus)
-        multiply = findViewById<TextView>(R.id.multiply)
-        divide = findViewById<TextView>(R.id.divide)
-        clear = findViewById<TextView>(R.id.clear)
-        reset = findViewById<TextView>(R.id.reset)
-        percent = findViewById<TextView>(R.id.percent)
-        equall = findViewById<TextView>(R.id.equall)
-        point = findViewById<TextView>(R.id.point)
+        initResultView()
+        initConditionView()
+        initZeroView()
+        initThreeZeroView()
+        initOneView()
+        initTwoView()
+        initThreeView()
+        initFourView()
+        initFiveView()
+        initSixView()
+        initSevenView()
+        initEightView()
+        initNineView()
+        initPlusView()
+        initMinusView()
+        initMultiplyView()
+        initDivideView()
+        initClearView()
+        initResetView()
+        initPercentView()
+        initEquallView()
+        initPointView()
     }
-
-    // Очень инетересный метод) Напиши ка к нему javaDoc с объяснением что он делает))))
-    fun run() {
-        zero()
-        threeZero()
-        one()
-        two()
-        three()
-        four()
-        five()
-        six()
-        seven()
-        eight()
-        nine()
-        reset()
-        plus()
-        minus()
-        multiply()
-        divide()
-        clear()
-        point()
-        percent()
-        equall()
-    }
-
 
 }
