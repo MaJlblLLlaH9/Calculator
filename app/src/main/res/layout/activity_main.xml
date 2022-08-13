@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    Вынест строки в ресы-->
+    <!--    Вынест строки в ресы-->
     <TextView
         android:id="@+id/result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80sp"
         android:text="@string/TextResult"
-        android:textSize="80sp"
+        android:textSize="30sp"
         android:gravity="end"
         android:ellipsize="start"
         android:singleLine="true"
@@ -35,103 +35,103 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="top"
-                android:layout_weight="1"
-                >
-                <TextView
-                    android:id="@+id/reset"
-                    style="@style/Button"
-                    android:text="@string/ResetText"
-                    />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/reset"
+                style="@style/Button"
+                android:text="@string/ResetText"
+                />
 
-                <TextView
-                    android:id="@+id/clear"
-                    style="@style/Button"
-                    android:text="@string/ClearText"
-                    />
+            <TextView
+                android:id="@+id/clear"
+                style="@style/Button"
+                android:text="@string/ClearText"
+                />
 
-                <TextView
-                    android:id="@+id/percent"
-                    style="@style/Button"
-                    android:text="@string/PercentText"
-                    />
+            <TextView
+                android:id="@+id/percent"
+                style="@style/Button"
+                android:text="@string/PercentText"
+                />
 
-                <TextView
-                    android:id="@+id/divide"
-                    style="@style/Button"
-                    android:text="@string/DivideText"
-                    />
+            <TextView
+                android:id="@+id/divide"
+                style="@style/Button"
+                android:text="@string/DivideText"
+                />
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                >
-                <TextView
-                    android:id="@+id/seven"
-                    style="@style/Button"
-                    android:text="@string/SevenText"
-                    />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/seven"
+                style="@style/Button"
+                android:text="@string/SevenText"
+                />
 
-                <TextView
-                    android:id="@+id/eight"
-                    style="@style/Button"
-                    android:text="@string/EightText"
-                    />
+            <TextView
+                android:id="@+id/eight"
+                style="@style/Button"
+                android:text="@string/EightText"
+                />
 
-                <TextView
-                    android:id="@+id/nine"
-                    style="@style/Button"
-                    android:text="@string/NineText"
-                    />
+            <TextView
+                android:id="@+id/nine"
+                style="@style/Button"
+                android:text="@string/NineText"
+                />
 
-                <TextView
-                    android:id="@+id/multiply"
-                    style="@style/Button"
-                    android:text="@string/MultipleText"
-                    />
+            <TextView
+                android:id="@+id/multiply"
+                style="@style/Button"
+                android:text="@string/MultipleText"
+                />
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            >
 
-                <TextView
-                    android:id="@+id/four"
-                    style="@style/Button"
-                    android:text="@string/FourText"
-                    />
+            <TextView
+                android:id="@+id/four"
+                style="@style/Button"
+                android:text="@string/FourText"
+                />
 
-                <TextView
-                    android:id="@+id/five"
-                    style="@style/Button"
-                    android:text="@string/FiveText"
-                    />
+            <TextView
+                android:id="@+id/five"
+                style="@style/Button"
+                android:text="@string/FiveText"
+                />
 
-                <TextView
-                    android:id="@+id/six"
-                    style="@style/Button"
-                    android:text="@string/SixText"
-                    />
+            <TextView
+                android:id="@+id/six"
+                style="@style/Button"
+                android:text="@string/SixText"
+                />
 
-                <TextView
-                    android:id="@+id/minus"
-                    style="@style/Button"
-                    android:text="@string/MinusText"
-                    />
+            <TextView
+                android:id="@+id/minus"
+                style="@style/Button"
+                android:text="@string/MinusText"
+                />
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,38 +167,36 @@
 
         </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:gravity="bottom"
-                android:layout_marginBottom="12dp"
-                >
-                <TextView
-                    android:id="@+id/zero"
-                    style="@style/Button"
-                    android:text="@string/ZeroText"
-                    />
-                <TextView
-                    android:id="@+id/threeZero"
-                    style="@style/Button"
-                    android:text="@string/ThreeZeroText"
-                    />
-                <TextView
-                    android:id="@+id/point"
-                    style="@style/Button"
-                    android:text="@string/PointText"
-                    />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:layout_marginBottom="12dp"
+            >
+            <TextView
+                android:id="@+id/zero"
+                style="@style/Button"
+                android:text="@string/ZeroText"
+                />
+            <TextView
+                android:id="@+id/threeZero"
+                style="@style/Button"
+                android:text="@string/ThreeZeroText"
+                />
+            <TextView
+                android:id="@+id/point"
+                style="@style/Button"
+                android:text="@string/PointText"
+                />
 
-                <TextView
-                    android:id="@+id/equall"
-                    style="@style/Button"
-                    android:text="@string/EquallyText"
-                    />
+            <TextView
+                android:id="@+id/equall"
+                style="@style/Button"
+                android:text="@string/EquallyText"
+                />
 
-            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-
-

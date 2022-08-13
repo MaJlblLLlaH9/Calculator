@@ -1,36 +1,41 @@
 package com.example.calculator
 
-import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import net.objecthunter.exp4j.ExpressionBuilder
+import java.lang.Exception
+
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var condition: TextView
-    lateinit var zero: TextView
-    lateinit var threeZero: TextView
-    lateinit var one: TextView
-    lateinit var two: TextView
-    lateinit var three: TextView
-    lateinit var four: TextView
-    lateinit var five: TextView
-    lateinit var six: TextView
-    lateinit var seven: TextView
-    lateinit var eight: TextView
-    lateinit var nine: TextView
-    lateinit var plus: TextView
-    lateinit var minus: TextView
-    lateinit var multiply: TextView
-    lateinit var divide: TextView
-    lateinit var clear: TextView
-    lateinit var reset: TextView
-    lateinit var percent: TextView
-    lateinit var equall: TextView
-    lateinit var result: TextView
-    lateinit var point: TextView
-    lateinit var resultString: String
-    lateinit var conditionString: String
+    private lateinit var condition: TextView
+    private lateinit var zero: TextView
+    private lateinit var threeZero: TextView
+    private lateinit var one: TextView
+    private lateinit var two: TextView
+    private lateinit var three: TextView
+    private lateinit var four: TextView
+    private lateinit var five: TextView
+    private lateinit var six: TextView
+    private lateinit var seven: TextView
+    private lateinit var eight: TextView
+    private lateinit var nine: TextView
+    private lateinit var plus: TextView
+    private lateinit var minus: TextView
+    private lateinit var multiply: TextView
+    private lateinit var divide: TextView
+    private lateinit var clear: TextView
+    private lateinit var reset: TextView
+    private lateinit var percent: TextView
+    private lateinit var equal: TextView
+    private lateinit var result: TextView
+    private lateinit var point: TextView
+    private lateinit var resultString: String
+    private lateinit var conditionString: String
+
+    private var pointExist : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,43 +44,51 @@ class MainActivity : AppCompatActivity() {
         initialization()
     }
 
-    fun initConditionView() {
-        condition = findViewById(R.id.condition)
-    }
-
-    fun initResultView() {
-        result = findViewById(R.id.result)
-    }
 
     private fun isNumber(input: String): Boolean {
         val integerChars = '0'..'9'
         return input.all { it in integerChars }
     }
 
-    // Str - Навроцкий был бы рад
-    private fun setResultField(answer: String) {
 
-        var string = answer
-        if (answer.last().toString() == "0") {
-            string = answer.dropLast(2)
-        }
-        result.text = string
+    private fun initConditionView() {
+        condition = findViewById(R.id.condition)
     }
 
-    // Str - Навроцкий был бы рад
+    private fun initResultView() {
+        result = findViewById(R.id.result)
+    }
+
+    private  fun clearFields(){
+        condition.text = ""
+        result.text = ""
+        pointExist = false
+    }
+
+    private fun setResultField(answer: String) {
+
+        result.text = answer
+    }
+
     // TODO : написать javaDoc для этого метода. Что принимает и что делает
     private fun setConditionField(expression: String) {
         conditionString = condition.text.toString()
 
-        if (isNumber(expression) || isNumber(conditionString.last().toString())) {
+        if(conditionString.isEmpty()){
+            condition.text = expression
+        }
+        else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == ".") {
             condition.text = conditionString + expression
-            resultString = conditionString + expression
-        } else if (!isNumber(expression)) {
+            resultString = condition.text.toString()
+        }
+        else {
             conditionString = conditionString.dropLast(1)
-            condition.text = conditionString + expression
+            condition.text =  conditionString + expression
+
         }
 
     }
+
 
     private fun initThreeZeroView() {
         threeZero = findViewById(R.id.threeZero)
@@ -119,88 +132,114 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun initSixView() {
+    private fun initSixView() {
         six = findViewById(R.id.six)
         six.setOnClickListener {
             setConditionField(six.text.toString())
         }
     }
 
-    fun initSevenView() {
+    private fun initSevenView() {
         seven = findViewById(R.id.seven)
         seven.setOnClickListener {
             setConditionField(seven.text.toString())
         }
     }
 
-    fun initEightView() {
+    private fun initEightView() {
         eight = findViewById(R.id.eight)
         eight.setOnClickListener {
             setConditionField(eight.text.toString())
         }
     }
 
-    fun initNineView() {
+    private fun initNineView() {
         nine = findViewById(R.id.nine)
         nine.setOnClickListener {
             setConditionField(nine.text.toString())
         }
     }
 
-    fun initPlusView() {
+    private fun initZeroView() {
+        zero = findViewById(R.id.zero)
+        zero.setOnClickListener {
+            setConditionField(zero.text.toString())
+        }
+    }
+
+
+    private fun initPlusView() {
         plus = findViewById(R.id.plus)
         plus.setOnClickListener {
             setConditionField(plus.text.toString())
+            pointExist = false
         }
     }
 
-    fun initMinusView() {
+    private fun initMinusView() {
         minus = findViewById(R.id.minus)
         minus.setOnClickListener {
             setConditionField(minus.text.toString())
+            pointExist = false
         }
     }
 
-    fun initMultiplyView() {
+    private fun initMultiplyView() {
         multiply = findViewById(R.id.multiply)
         multiply.setOnClickListener {
             setConditionField(multiply.text.toString())
+            pointExist = false
         }
     }
 
-    fun initDivideView() {
+    private fun initDivideView() {
         divide = findViewById(R.id.divide)
         divide.setOnClickListener {
             setConditionField(divide.text.toString())
+            pointExist = false
         }
     }
 
-    fun initPointView() {
+    private fun initPointView() {
         point = findViewById(R.id.point)
         point.setOnClickListener {
-            setConditionField(point.text.toString())
-            //  isPoint = true
+            if(!pointExist){
+                setConditionField(point.text.toString())
+                pointExist = true
+            }
         }
     }
 
-    fun calculation(expression: String) {
-        val result = ExpressionBuilder(expression).build().evaluate().toString()
-        setResultField(result)
+
+    private fun calculation(expression: String) {
+        try{if( isNumber(resultString.last().toString())){
+            setResultField(ExpressionBuilder(expression).build().evaluate().toString())
+        }
+        else {
+            setResultField(ExpressionBuilder(expression.dropLast(1)).build().evaluate().toString())
+        }
+        }catch (e:Exception){
+            clearFields()
+            setResultField("Invalid Expression")
+            Log.d("Ошибка.", "текст  ${e.message}")
+        }
     }
 
-    fun initPercentView() {
+    private fun initPercentView() {
         percent = findViewById(R.id.percent)
         percent.setOnClickListener {
             setConditionField(percent.text.toString())
+
+            resultString = result.text.toString()
 
             var resultStringWithPercent = ""
             var stringBeforePercent = ""
             var quantityOfPercent = ""
 
             var position = resultString.length - 2
-            var conditionArray = resultString.toCharArray()
+            val conditionArray = resultString.toCharArray()
 
-            while (isNumber(conditionArray[position].toString())) {
+            while (isNumber(conditionArray[position].toString())&&conditionArray[position].toString()!=".") {
                 position--
             }
             stringBeforePercent = conditionString.dropLast(conditionString.length - position)
@@ -210,44 +249,43 @@ class MainActivity : AppCompatActivity() {
             var countOfPercent = ((quantityOfPercent.toDouble() / 100) * stringBeforePercent.toDouble())
 
             resultStringWithPercent =
-                    stringBeforePercent + conditionArray[position] + countOfPercent.toString()
+                stringBeforePercent + conditionArray[position] + countOfPercent.toString()
             calculation(resultStringWithPercent)
         }
     }
 
-    fun initEquallView() {
-        equall = findViewById(R.id.equall)
-        equall.setOnClickListener {
+    private fun initEqualView() {
+        equal = findViewById(R.id.equall)
+        equal.setOnClickListener {
             calculation(resultString)
         }
     }
 
-    fun initClearView() {
+    private fun initClearView() {
         clear = findViewById(R.id.clear)
         clear.setOnClickListener {
+
             val conditionString = condition.text.toString()
-            if (conditionString.isNotEmpty()) {
+
+            if (conditionString.isNotEmpty()&&conditionString.last()=='.') {
+                condition.text = conditionString.dropLast(1)
+                pointExist = false
+            }
+            else {
                 condition.text = conditionString.dropLast(1)
             }
         }
     }
 
-    fun initResetView() {
+    private fun initResetView() {
         reset = findViewById(R.id.reset)
         reset.setOnClickListener {
-            condition.text = "0"
-            result.text = ""
+            clearFields()
         }
     }
 
-    fun initZeroView() {
-        zero = findViewById(R.id.zero)
-        zero.setOnClickListener {
-            setConditionField(zero.text.toString())
-        }
-    }
 
-    fun initialization() {
+    private fun initialization() {
         initResultView()
         initConditionView()
         initZeroView()
@@ -268,8 +306,7 @@ class MainActivity : AppCompatActivity() {
         initClearView()
         initResetView()
         initPercentView()
-        initEquallView()
+        initEqualView()
         initPointView()
     }
-
 }
