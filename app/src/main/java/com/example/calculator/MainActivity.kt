@@ -255,10 +255,10 @@ class MainActivity : AppCompatActivity() {
 
             resultString = stringBeforePercent + conditionArray[position] + countOfPercent.toString()
 
-                setResultField(calculation(resultString))
 
             clearFields()
-            setConditionField(resultString)
+                setResultField(calculation(resultString))
+                setConditionField(resultString)
             }
         }
     }
