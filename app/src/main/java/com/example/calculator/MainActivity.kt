@@ -239,18 +239,19 @@ class MainActivity : AppCompatActivity() {
             var position = conditionString.length - 2
             val conditionArray = conditionString.toCharArray()
 
-            while (isNumber(conditionArray[position].toString()) && position != 0) {
+            while ((isNumber(conditionArray[position].toString()) && position != 0)||conditionArray[position]== '.') {
                 position--
             }
 
             if (position == 0 ) {
+                clearFields()
                 setResultField(conditionString.dropLast(1))
             } else {
 
             val stringBeforePercent = resultString.substring(0 , position)
 
             val quantityOfPercent = resultString.substring(position + 1 , conditionString.length - 1)
-
+            setResultField(quantityOfPercent)
             val countOfPercent = ((quantityOfPercent.toDouble() / 100) * (ExpressionBuilder(stringBeforePercent).build().evaluate()))
 
             resultString = stringBeforePercent + conditionArray[position] + countOfPercent.toString()
