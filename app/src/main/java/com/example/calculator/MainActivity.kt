@@ -2,7 +2,6 @@ package com.example.calculator
 
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import net.objecthunter.exp4j.ExpressionBuilder
 
@@ -54,26 +53,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Str - Навроцкий был бы рад
-    private fun setResultField(str: String) {
+    private fun setResultField(answer: String) {
 
-        var string = str
-        if (str.last().toString() == "0") {
-            string = str.dropLast(2)
+        var string = answer
+        if (answer.last().toString() == "0") {
+            string = answer.dropLast(2)
         }
         result.text = string
     }
 
     // Str - Навроцкий был бы рад
     // TODO : написать javaDoc для этого метода. Что принимает и что делает
-    private fun setConditionField(str: String) {
+    private fun setConditionField(expression: String) {
         conditionString = condition.text.toString()
 
-        if (isNumber(str) || isNumber(conditionString.last().toString())) {
-            condition.text = conditionString + str
-            resultString = conditionString + str
-        } else if (!isNumber(str)) {
+        if (isNumber(expression) || isNumber(conditionString.last().toString())) {
+            condition.text = conditionString + expression
+            resultString = conditionString + expression
+        } else if (!isNumber(expression)) {
             conditionString = conditionString.dropLast(1)
-            condition.text = conditionString + str
+            condition.text = conditionString + expression
         }
 
     }
