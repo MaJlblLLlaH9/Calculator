@@ -1,5 +1,6 @@
 package com.example.calculator
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -44,6 +45,9 @@ class MainActivity : AppCompatActivity() {
         initialization()
     }
 
+    private fun defineConditionString() : String {
+        return condition.text.toString()
+    }
 
     private fun isNumber(input: String): Boolean {
         val integerChars = '0'..'9'
@@ -59,19 +63,8 @@ class MainActivity : AppCompatActivity() {
         result = findViewById(R.id.result)
     }
 
-    private  fun clearFields(){
-        condition.text = ""
-        result.text = ""
-        pointExist = false
-    }
-
     private fun setResultField(answer: String) {
-
         result.text = answer
-    }
-
-    private fun defineConditionString() : String {
-        return condition.text.toString()
     }
 
     // TODO : написать javaDoc для этого метода. Что принимает и что делает
@@ -79,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         conditionString = defineConditionString()
 
         if(conditionString.isEmpty()){
-
             condition.text = expression
         }
         else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
@@ -215,25 +207,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun calculation(expression: String): String {
-        try {
-            return if( isNumber (resultString.last().toString())){
-                ExpressionBuilder (expression).build().evaluate().toString()
-            } else {
-                ExpressionBuilder (expression.dropLast(1)).build().evaluate().toString()
-            }
-        } catch (e : Exception) {
-            clearFields()
-            return ("Invalid Expression")
-            Log.d("Ошибка.", "текст  ${e.message}")
-        }
-    }
-
     private fun initPercentView() {
         percent = findViewById(R.id.percent)
         percent.setOnClickListener {
             conditionString = defineConditionString()
+
             if (conditionString.isEmpty() ){
                 condition.text = ""
             } else {
@@ -246,6 +224,7 @@ class MainActivity : AppCompatActivity() {
                 setConditionField(resultString)
         }}
     }
+
 
     private fun countOfPercent(): String{
         conditionString = defineConditionString()
@@ -262,7 +241,6 @@ class MainActivity : AppCompatActivity() {
         } else {
 
             val stringBeforePercent = resultString.substring(0, position)
-
             val quantityOfPercent = resultString.substring(position + 1, conditionString.length - 1)
             val calculatedPercent =
                 ((quantityOfPercent.toDouble() / 100) * (ExpressionBuilder(stringBeforePercent).build()
@@ -271,13 +249,6 @@ class MainActivity : AppCompatActivity() {
             stringBeforePercent + conditionArray[position] + calculatedPercent.toString()
         }
 
-    }
-
-    private fun initEqualView() {
-        equal = findViewById(R.id.equall)
-        equal.setOnClickListener {
-           setResultField( calculation(resultString))
-        }
     }
 
     private fun initClearView() {
@@ -303,6 +274,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initEqualView() {
+        equal = findViewById(R.id.equall)
+        equal.setOnClickListener {
+           setResultField( calculation(resultString))
+        }
+    }
+
+    private  fun clearFields(){
+        condition.text = ""
+        result.text = ""
+        pointExist = false
+    }
+
+    private fun calculation(expression: String): String {
+        try {
+            return if( isNumber (resultString.last().toString())){
+                ExpressionBuilder (expression).build().evaluate().toString()
+            } else {
+                ExpressionBuilder (expression.dropLast(1)).build().evaluate().toString()
+            }
+        } catch (e : Exception) {
+            clearFields()
+            return ("Invalid Expression")
+            Log.d("Error.", "text  ${e.message}")
+        }
+    }
 
     private fun initialization() {
         initResultView()
