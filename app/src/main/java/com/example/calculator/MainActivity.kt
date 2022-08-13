@@ -70,14 +70,18 @@ class MainActivity : AppCompatActivity() {
         result.text = answer
     }
 
+    private fun defineConditionString() : String {
+        return condition.text.toString()
+    }
+
     // TODO : написать javaDoc для этого метода. Что принимает и что делает
     private fun setConditionField(expression: String) {
-        conditionString = condition.text.toString()
+        conditionString = defineConditionString()
 
         if(conditionString.isEmpty()){
             condition.text = expression
         }
-        else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == ".") {
+        else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
             condition.text = conditionString + expression
             resultString = condition.text.toString()
         }
@@ -211,16 +215,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun calculation(expression: String) {
-        try{if( isNumber(resultString.last().toString())){
-            setResultField(ExpressionBuilder(expression).build().evaluate().toString())
+    private fun calculation(expression: String): String {
+        try {
+            if( isNumber(resultString.last().toString())){
+            return ExpressionBuilder(expression).build().evaluate().toString()
         }
         else {
-            setResultField(ExpressionBuilder(expression.dropLast(1)).build().evaluate().toString())
+            return ExpressionBuilder(expression.dropLast(1)).build().evaluate().toString()
         }
-        }catch (e:Exception){
+        } catch (e : Exception) {
             clearFields()
-            setResultField("Invalid Expression")
+            return ("Invalid Expression")
             Log.d("Ошибка.", "текст  ${e.message}")
         }
     }
@@ -230,34 +235,34 @@ class MainActivity : AppCompatActivity() {
         percent.setOnClickListener {
             setConditionField(percent.text.toString())
 
-            resultString = result.text.toString()
+            conditionString = defineConditionString()
 
-            var resultStringWithPercent = ""
-            var stringBeforePercent = ""
-            var quantityOfPercent = ""
+            val conditionArray = conditionString.toCharArray()
+            var position = conditionString.length - 2
 
-            var position = resultString.length - 2
-            val conditionArray = resultString.toCharArray()
-
-            while (isNumber(conditionArray[position].toString())&&conditionArray[position].toString()!=".") {
+            while (isNumber(conditionArray[position].toString())) {
                 position--
             }
-            stringBeforePercent = conditionString.dropLast(conditionString.length - position)
 
-            quantityOfPercent = resultString.substring(position + 1, resultString.length - 1)
+            val stringBeforePercent = resultString.substring(0 , position)
 
-            var countOfPercent = ((quantityOfPercent.toDouble() / 100) * stringBeforePercent.toDouble())
+            val quantityOfPercent = resultString.substring(position + 1 ,conditionString.length - 1)
 
-            resultStringWithPercent =
-                stringBeforePercent + conditionArray[position] + countOfPercent.toString()
-            calculation(resultStringWithPercent)
+            val countOfPercent = ((quantityOfPercent.toDouble() / 100) * (ExpressionBuilder(stringBeforePercent).build().evaluate().toDouble()))
+
+            val resultStringWithPercent = stringBeforePercent + conditionArray[position] + countOfPercent.toString()
+
+            resultString = calculation(resultStringWithPercent)
+            clearFields()
+            setConditionField(resultString)
+
         }
     }
 
     private fun initEqualView() {
         equal = findViewById(R.id.equall)
         equal.setOnClickListener {
-            calculation(resultString)
+           setResultField( calculation(resultString))
         }
     }
 
@@ -267,7 +272,7 @@ class MainActivity : AppCompatActivity() {
 
             val conditionString = condition.text.toString()
 
-            if (conditionString.isNotEmpty()&&conditionString.last()=='.') {
+            if (conditionString.isNotEmpty() && conditionString.last() == '.') {
                 condition.text = conditionString.dropLast(1)
                 pointExist = false
             }

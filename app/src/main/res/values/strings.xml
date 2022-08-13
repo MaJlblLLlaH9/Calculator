@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Calculator</string>
     <string name="TextResult"></string>
-    <string name="ConditionText">0</string>
+    <string name="ConditionText"></string>
     <string name="ZeroText">0</string>
     <string name="OneText">1</string>
     <string name="TwoText">2</string>
