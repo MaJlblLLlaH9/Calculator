@@ -217,12 +217,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun calculation(expression: String): String {
         try {
-            if( isNumber(resultString.last().toString())){
-            return ExpressionBuilder(expression).build().evaluate().toString()
-        }
-        else {
-            return ExpressionBuilder(expression.dropLast(1)).build().evaluate().toString()
-        }
+            return if( isNumber (resultString.last().toString())){
+                ExpressionBuilder (expression).build().evaluate().toString()
+            } else {
+                ExpressionBuilder (expression.dropLast(1)).build().evaluate().toString()
+            }
         } catch (e : Exception) {
             clearFields()
             return ("Invalid Expression")
@@ -237,25 +236,30 @@ class MainActivity : AppCompatActivity() {
 
             conditionString = defineConditionString()
 
-            val conditionArray = conditionString.toCharArray()
             var position = conditionString.length - 2
+            val conditionArray = conditionString.toCharArray()
 
-            while (isNumber(conditionArray[position].toString())) {
+            while (isNumber(conditionArray[position].toString()) && position != 0) {
                 position--
             }
 
+            if (position == 0 ) {
+                setResultField(conditionString.dropLast(1))
+            } else {
+
             val stringBeforePercent = resultString.substring(0 , position)
 
-            val quantityOfPercent = resultString.substring(position + 1 ,conditionString.length - 1)
+            val quantityOfPercent = resultString.substring(position + 1 , conditionString.length - 1)
 
-            val countOfPercent = ((quantityOfPercent.toDouble() / 100) * (ExpressionBuilder(stringBeforePercent).build().evaluate().toDouble()))
+            val countOfPercent = ((quantityOfPercent.toDouble() / 100) * (ExpressionBuilder(stringBeforePercent).build().evaluate()))
 
-            val resultStringWithPercent = stringBeforePercent + conditionArray[position] + countOfPercent.toString()
+            resultString = stringBeforePercent + conditionArray[position] + countOfPercent.toString()
 
-            resultString = calculation(resultStringWithPercent)
+                setResultField(calculation(resultString))
+
             clearFields()
             setConditionField(resultString)
-
+            }
         }
     }
 
