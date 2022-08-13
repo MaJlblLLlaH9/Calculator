@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         conditionString = defineConditionString()
 
         if(conditionString.isEmpty()){
+
             condition.text = expression
         }
         else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
@@ -232,36 +233,44 @@ class MainActivity : AppCompatActivity() {
     private fun initPercentView() {
         percent = findViewById(R.id.percent)
         percent.setOnClickListener {
+            conditionString = defineConditionString()
+            if (conditionString.isEmpty() ){
+                condition.text = ""
+            } else {
             setConditionField(percent.text.toString())
 
-            conditionString = defineConditionString()
-
-            var position = conditionString.length - 2
-            val conditionArray = conditionString.toCharArray()
-
-            while ((isNumber(conditionArray[position].toString()) && position != 0)||conditionArray[position]== '.') {
-                position--
-            }
-
-            if (position == 0 ) {
-                clearFields()
-                setResultField(conditionString.dropLast(1))
-            } else {
-
-            val stringBeforePercent = resultString.substring(0 , position)
-
-            val quantityOfPercent = resultString.substring(position + 1 , conditionString.length - 1)
-            setResultField(quantityOfPercent)
-            val countOfPercent = ((quantityOfPercent.toDouble() / 100) * (ExpressionBuilder(stringBeforePercent).build().evaluate()))
-
-            resultString = stringBeforePercent + conditionArray[position] + countOfPercent.toString()
-
+            resultString = countOfPercent()
 
             clearFields()
                 setResultField(calculation(resultString))
                 setConditionField(resultString)
-            }
+        }}
+    }
+
+    private fun countOfPercent(): String{
+        conditionString = defineConditionString()
+
+        var position = conditionString.length - 2
+        val conditionArray = conditionString.toCharArray()
+
+        while ((isNumber(conditionArray[position].toString()) && position != 0)||conditionArray[position]== '.') {
+            position--
         }
+
+        return if (position == 0 ) {
+            ""
+        } else {
+
+            val stringBeforePercent = resultString.substring(0, position)
+
+            val quantityOfPercent = resultString.substring(position + 1, conditionString.length - 1)
+            val calculatedPercent =
+                ((quantityOfPercent.toDouble() / 100) * (ExpressionBuilder(stringBeforePercent).build()
+                    .evaluate()))
+
+            stringBeforePercent + conditionArray[position] + calculatedPercent.toString()
+        }
+
     }
 
     private fun initEqualView() {
