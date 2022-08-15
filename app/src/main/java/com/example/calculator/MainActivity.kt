@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         condition = findViewById(R.id.condition)
     }
 
-    private fun hui(value: String): String {
+    private fun pasteSymbol(value: String): String {
         return conditionString + value
     }
 
@@ -70,20 +70,20 @@ class MainActivity : AppCompatActivity() {
         result.text = answer
     }
 
-    private fun setConditionField(expression: String) {
+    private fun setConditionField(value: String) {
         conditionString = defineConditionString()
 
-        if(conditionString.isEmpty()){
-
-            condition.text = expression
-        }
-        else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
-            condition.text = hui(expression)
+//        if(conditionString.isEmpty()){
+//
+//            condition.text = value
+//        }
+        if (isNumber (value) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
+            condition.text = pasteSymbol(value)
             resultString = condition.text.toString()
         }
         else {
             conditionString = conditionString.dropLast(1)
-            condition.text =  hui(expression)
+            condition.text =  pasteSymbol(value)
 
         }
 
@@ -220,20 +220,21 @@ class MainActivity : AppCompatActivity() {
         val conditionArray = conditionString.toCharArray()
         var position = conditionString.length-2
 
+        if(conditionArray[position+1] == '.'){
+            pointExist = true
+            return
+        }
 //
-        while(isNumber(conditionArray[position].toString()) && position > 0){
+        while((isNumber(conditionArray[position].toString()) || conditionArray[position] == '.') && position > 0){
             if(conditionArray[position] == '.'){
                 pointExist = true
-//                setResultField(position.toString())
                 break
             }else {
                 position--
             }
         }
 
-
         }
-//        return pointExist
 
 
     private fun initPercentView() {
