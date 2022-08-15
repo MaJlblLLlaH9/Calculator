@@ -1,13 +1,11 @@
 package com.example.calculator
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.lang.Exception
-import kotlin.math.exp
 
 
 class MainActivity : AppCompatActivity() {
@@ -324,17 +322,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculation(expression: String): String {
-        try{
-            return if( isNumber (resultString.last().toString())) {
+        return try{
+            if( isNumber (resultString.last().toString())) {
                 ExpressionBuilder (expression).build().evaluate().toString()
             } else {
                 ExpressionBuilder (expression.dropLast(1)).build().evaluate().toString()
             }
-        }
-        catch(e : Exception) {
+        } catch(e : Exception) {
             clearFields()
             Log.d("Error.", "text  ${e.message}")
-            return ("Invalid Expression")
+            ("Invalid Expression")
         }
     }
 
