@@ -70,20 +70,19 @@ class MainActivity : AppCompatActivity() {
         result.text = answer
     }
 
-    private fun setConditionField(value: String) {
+    private fun setConditionField(expression: String) {
         conditionString = defineConditionString()
 
-//        if(conditionString.isEmpty()){
-//
-//            condition.text = value
-//        }
-        if (isNumber (value) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
-            condition.text = pasteSymbol(value)
-            resultString = condition.text.toString()
+        if(conditionString.isEmpty()){
+            condition.text = expression
+        }
+        else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
+            condition.text = pasteSymbol(expression)
+            resultString = defineConditionString()
         }
         else {
             conditionString = conditionString.dropLast(1)
-            condition.text =  pasteSymbol(value)
+            condition.text =  pasteSymbol(expression)
 
         }
 
@@ -243,7 +242,7 @@ class MainActivity : AppCompatActivity() {
             conditionString = defineConditionString()
 
             if (defineConditionString().isEmpty()) {
-               clearFields()
+                clearFields()
             } else {
                 setConditionField(percent.text.toString())
 
@@ -258,8 +257,8 @@ class MainActivity : AppCompatActivity() {
 
     private  fun findPositionOfPercentNumber(): Int {
 
+        var position = conditionString.length - 2
         val conditionArray = conditionString.toCharArray()
-        var position = conditionArray.lastIndex - 1
 
         while ((isNumber(conditionArray[position].toString()) && position != 0)||conditionArray[position]== '.') {
             position--
