@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.TextView
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.lang.Exception
+import kotlin.math.exp
 
 
 class MainActivity : AppCompatActivity() {
@@ -59,6 +60,10 @@ class MainActivity : AppCompatActivity() {
         condition = findViewById(R.id.condition)
     }
 
+    private fun hui(value: String): String {
+        return conditionString + value
+    }
+
     private fun initResultView() {
         result = findViewById(R.id.result)
     }
@@ -75,12 +80,12 @@ class MainActivity : AppCompatActivity() {
             condition.text = expression
         }
         else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
-            condition.text = conditionString + expression
+            condition.text = hui(expression)
             resultString = condition.text.toString()
         }
         else {
             conditionString = conditionString.dropLast(1)
-            condition.text =  conditionString + expression
+            condition.text =  hui(expression)
 
         }
 
@@ -203,12 +208,34 @@ class MainActivity : AppCompatActivity() {
     private fun initPointView() {
         point = findViewById(R.id.point)
         point.setOnClickListener {
+            checkingPoint()
             if (!pointExist) {
                 setConditionField(point.text.toString())
                 pointExist = true
             }
         }
     }
+
+    private fun checkingPoint() {
+        conditionString = defineConditionString()
+        pointExist = false
+        val conditionArray = conditionString.toCharArray()
+        var position = conditionString.length-2
+
+//
+        while(isNumber(conditionArray[position].toString()) && position > 0){
+            if(conditionArray[position] == '.'){
+                pointExist = true
+//                setResultField(position.toString())
+                break
+            }else {
+                position--
+            }
+        }
+
+
+        }
+//        return pointExist
 
 
     private fun initPercentView() {
@@ -232,8 +259,8 @@ class MainActivity : AppCompatActivity() {
 
     private  fun findPositionOfPercentNumber(): Int {
 
-        var position = conditionString.length - 2
         val conditionArray = conditionString.toCharArray()
+        var position = conditionArray.lastIndex - 1
 
         while ((isNumber(conditionArray[position].toString()) && position != 0)||conditionArray[position]== '.') {
             position--
