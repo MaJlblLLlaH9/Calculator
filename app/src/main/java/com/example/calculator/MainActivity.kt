@@ -70,28 +70,28 @@ class MainActivity : AppCompatActivity() {
         result.text = answer
     }
 
-    private fun setConditionField(expression: String) {
+    private fun setConditionField(value: String) {
         conditionString = defineConditionString()
 
         if(conditionString.isEmpty()){
-            condition.text = expression
+            condition.text = value
         }
-        else if (isNumber (expression) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%") {
-            condition.text = pasteSymbol(expression)
-            resultString = defineConditionString()
+        else if (checkingOnOperator(value)) {
+            conditionString = conditionString.dropLast(1)
+            condition.text =  pasteSymbol(value)
+
         }
         else {
-            conditionString = conditionString.dropLast(1)
-            condition.text =  pasteSymbol(expression)
-
+            condition.text = pasteSymbol(value)
+            resultString = defineConditionString()
         }
 
     }
 
+    private fun checkingOnOperator(value: String): Boolean {
+        return !(isNumber (value) || isNumber(conditionString.last().toString()) || conditionString.last().toString() == "."|| conditionString.last().toString() == "%")
+    }
 
-    //    private fun checkingEnter (symbol: String){
-//
-//    }
     private fun initThreeZeroView() {
         threeZero = findViewById(R.id.threeZero)
         threeZero.setOnClickListener {
