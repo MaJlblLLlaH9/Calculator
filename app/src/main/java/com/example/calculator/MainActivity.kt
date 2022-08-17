@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var resultString: String
     private lateinit var conditionString: String
 
-    private var pointExist: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -217,16 +215,20 @@ class MainActivity : AppCompatActivity() {
     private fun initPointView() {
         point = findViewById(R.id.point)
         point.setOnClickListener {
-            pointExist = checkPoint()
-            if (!pointExist) {
-                setPoint()
-            }
+           setPoint()
         }
     }
 
     private fun setPoint() {
-        setConditionField(point.text.toString())
-        pointExist = true
+        conditionString = defineConditionString()
+        if(conditionString.length == 1){
+            setConditionField(point.text.toString())
+        }else
+        {
+            if(!checkPoint()) {
+            setConditionField(point.text.toString())
+            }
+        }
     }
 
     private fun getLastPosition(): Int{
@@ -236,15 +238,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkPoint(): Boolean {
         conditionString = defineConditionString()
-        val numberArray = findLastNumber().toCharArray()
-        var index = 0
-        while(index != numberArray.size){
-            return numberArray[index] == '.'
+        val conditionArray = conditionString.toCharArray()
+        var position = getLastPosition()
+        if(conditionString.last() == '.'){
+            return true
+        }
+        while(!isOperatorExist(position)){
+            if( conditionArray[position] == '.'){
+                return true
+            }
+                position--
         }
         return false
     }
 
     private fun isOperatorExist(position: Int): Boolean {
+        conditionString = defineConditionString()
         val conditionArray = conditionString.toCharArray()
         return !((isNumber(conditionArray[position].toString()) && position != 0)||conditionArray[position]== '.')
     }
@@ -276,7 +285,6 @@ class MainActivity : AppCompatActivity() {
    }
 
     private  fun findPositionOfLastNumber(): Int {
-        conditionString = defineConditionString()
         var position = getLastPosition()
 
         while (!isOperatorExist(position)) {
@@ -299,8 +307,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun countOfPercent(positionOfPercentNumber: Int): String {
-        conditionString = defineConditionString()
-
         return if (positionOfPercentNumber == 0) {
             (conditionString.dropLast(1).toDouble() / 100).toString()
         } else {
@@ -342,7 +348,6 @@ class MainActivity : AppCompatActivity() {
     private  fun clearFields() {
         condition.text = ""
         result.text = ""
-        pointExist = false
     }
 
     private fun calculation(expression: String): String {
